@@ -1,0 +1,18 @@
+FROM ubuntu
+
+MAINTAINER nobody
+
+RUN apt update && \
+apt install -y git && \
+apt install aptitude && \
+apt install synaptic && \
+apt install bc &&\
+apt install lsb_release &&\
+apt-get install software-properties-common
+RUN git clone https://github.com/HewlettPackard/Aruba-FlaskwithNetworking.git
+RUN chmod +x ./Aruba-FlaskwithNetworking/install.sh
+RUN ./Aruba-FlaskwithNetworking/install.sh
+RUN service mysql stop
+RUN usermod -d /var/lib/mysql/ mysql
+RUN service mysql start
+RUN /var/www/html/startapp.sh
